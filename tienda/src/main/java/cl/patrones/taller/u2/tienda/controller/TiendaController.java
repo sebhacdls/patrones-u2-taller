@@ -1,5 +1,6 @@
 package cl.patrones.taller.u2.tienda.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import cl.patrones.taller.u2.bodegaje.domain.Producto;
 import cl.patrones.taller.u2.bodegaje.repository.ProductoRepository;
 import cl.patrones.taller.u2.catalogo.domain.Aviso;
+import cl.patrones.taller.u2.catalogo.domain.Clasificacion;
+import cl.patrones.taller.u2.catalogo.repository.ClasificacionRepository;
 import cl.patrones.taller.u2.tienda.adapter.ProductoAvisoAdapter;
 
 @Controller
@@ -19,6 +22,9 @@ public class TiendaController {
 	
 	@Autowired
 	private ProductoRepository productoRepository;
+
+    @Autowired
+    private ClasificacionRepository clasificacionRepository;
 	
 	@GetMapping("/")
 public String inicio(Model model) {
@@ -37,17 +43,34 @@ public String inicio(Model model) {
 }
 		
 	@GetMapping("/categoria/{categoriaId}/{slug}")
-	public String categoria(
-			@PathVariable(name = "categoriaId") Long categoriaId,
-			@PathVariable(name = "slug") String slug,
-			Model model
-	) {
-		// TODO: Actividad 2: Avisos
-		//model.addAttribute("avisos", avisos);
-		//model.addAttribute("categoria", categoria);
-		return "categoria";
-	}
-	
+    public String categoria(
+            @PathVariable(name = "categoriaId") Long categoriaId,
+            @PathVariable(name = "slug") String slug,
+            Model model
+    ) {
+        // Buscamos las clasificaciones de esa categoría y luego los productos que coinciden por SKU
+        List<Clasificacion> clasificaciones = clasificacionRepository.findByCategoriaId(categoriaId);
+        List<String> skus = clasificaciones.stream()
+                .map(Clasificacion::getSku)
+                .collect(Collectors.toList());
+
+        List<Producto> productos = skus.isEmpty()
+                ? Collections.emptyList()
+                : productoRepository.findBySkuIn(skus);
+
+        // Los adaptamos igual que en el inicio
+        List<Aviso> avisos = productos.stream()
+                .map(p -> new ProductoAvisoAdapter(p))
+                .collect(Collectors.toList());
+
+        model.addAttribute("avisos", avisos);
+        if (!avisos.isEmpty()) {
+            model.addAttribute("categoria", clasificaciones.get(0).getCategoria().getNombre());
+        }
+
+        return "categoria";
+    }
+
 	@GetMapping("/ingresar")
 	public String login() {
 		return "login";

@@ -1,7 +1,7 @@
-package cl.patrones.taller.u2.tienda.adapter;
+package cl.patrones.taller.u2.tienda.menu;
 
-import cl.patrones.taller.u2.bodegaje.domain.Producto;
 import cl.patrones.taller.u2.catalogo.domain.Aviso;
+import cl.patrones.taller.u2.bodegaje.domain.Producto;
 
 public class ProductoAvisoAdapter implements Aviso {
     
@@ -23,14 +23,16 @@ public class ProductoAvisoAdapter implements Aviso {
 
     @Override
     public Double getPrecio() {
-        return producto.getCosto() * 1.30; // Costo + 30% de utilidad
+        // Cálculo: Costo base + 30% de utilidad
+        return producto.getCosto() * 1.30;
     }
 
     @Override
     public int getStock() {
-        return (int) producto.getStocks().stream()
-                .mapToLong(s -> s.getCantidad())
-                .sum(); // Stock consolidado de todas las bodegas
+        // Sumamos el stock de todas las bodegas
+        return producto.getStocks().stream()
+                .mapToInt(e -> e.getCantidad())
+                .sum();
     }
 
     @Override
@@ -40,6 +42,6 @@ public class ProductoAvisoAdapter implements Aviso {
 
     @Override
     public String getCategoriaNombre() {
-        return ""; // Producto no tiene categoría asociada
+        return ""; // Producto no tiene categoría asociada directamente
     }
 }

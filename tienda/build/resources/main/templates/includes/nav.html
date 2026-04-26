@@ -58,9 +58,9 @@
                 </ul>
                 
                 <div class="d-flex align-items-center">
-                    <span class="navbar-text me-3">
-                        Bienvenido <strong th:text="${usuarioActual != null ? usuarioActual.nombre : 'Invitado'}">XXXXX</strong>
-                    </span>
+                   <span class="navbar-text me-3">
+    Bienvenido <strong th:text="${usuarioActual}">Invitado</strong>
+</span>
                     
                     <a class="btn btn-sm btn-outline-secondary me-2" 
                        data-th-href="@{/ingresar}" 
