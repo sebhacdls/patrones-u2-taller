@@ -38,7 +38,7 @@ public class MenuControllerAdvice {
 
         for (Categoria cat : categoriasDesdeBD) {
             if (cat.getPadre() == null) {
-                listaMenu.add(new CategoriaAdapter(cat));
+                listaMenu.add(new CategoriaAdapter(cat, categoriasDesdeBD));
             }
         }
 

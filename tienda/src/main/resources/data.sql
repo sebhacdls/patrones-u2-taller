@@ -8,7 +8,7 @@ INSERT INTO cli_clientes(email, nombre, comuna, direccion, contrasena) VALUES
 
 -- MODULO CATALOGO
 INSERT INTO cat_categorias(nombre, padre_id) VALUES	
-	('Lámparas', NULL)
+	('Lamparas', NULL)
 	,('Sillas', NULL)
 	,('Clásicas', 2)
 	,('Modernas', 2)
@@ -31,12 +31,12 @@ INSERT INTO cat_clasificacion(sku, categoria_id) VALUES
 
 -- MODULO BODEGAJE
 INSERT INTO bod_productos(sku, nombre, costo, imagen) VALUES
-    ('lamp-001', 'Lámpara LumiGlow', 20000, 'pendant-lamp-light.jpg')
-    ,('lamp-002', 'Lámpara NordicBeam', 50000, 'carrie-table-lamp2.jpg')
-    ,('lamp-003', 'Lámpara Nomad Light', 45000, 'carrie-table-lamp.jpg')
-    ,('lamp-004', 'Lámpara HaloTouch', 15000, 'table-lamp-14x29cm.jpg')
+    ('lamp-001', 'Lampara LumiGlow', 20000, 'pendant-lamp-light.jpg')
+    ,('lamp-002', 'Lampara NordicBeam', 50000, 'carrie-table-lamp2.jpg')
+    ,('lamp-003', 'Lampara Nomad Light', 45000, 'carrie-table-lamp.jpg')
+    ,('lamp-004', 'Lampara HaloTouch', 15000, 'table-lamp-14x29cm.jpg')
     ,('sill-001', 'Silla Lounge', 25000, 'wegner-lounge-chair.jpg')
-    ,('sill-002', 'Silla Clásica Moderna', 20000, 'modern-classic-chairs.jpg')
+    ,('sill-002', 'Silla Clasica Moderna', 20000, 'modern-classic-chairs.jpg')
 ;
 
 INSERT INTO bod_bodegas(nombre, direccion) VALUES
